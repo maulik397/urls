@@ -1,19 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../App.css';
+import axios from 'axios';
 
 function Home() {
-  const [url, setUrl] = useState('');
-  const [urls, setUrls] = useState([]);
 
-  const handleShortenUrl = () => {
-    if (url.trim() !== '') {
-      setUrls([...urls, url]);
-      setUrl('');
+    // Load URLs from local storage when component mounts
+    useEffect(() => {
+      const storedUrls = localStorage.getItem('shortenedUrls');
+      if (storedUrls) {
+        setUrls(JSON.parse(storedUrls));
+      }
+    }, []);
+  
+
+  
+  const [originalUrl, setUrl] = useState('');
+  const [urls, setUrls] = useState(() => {
+    // Load URLs from local storage when initializing state
+    const storedUrls = localStorage.getItem('shortenedUrls');
+    return storedUrls ? JSON.parse(storedUrls) : [];
+  });
+  const [shortUrl, setShortUrl] = useState('');
+  const [error, setError] = useState('');
+  const [isUrlShortened, setIsUrlShortened] = useState(false);
+
+    // Update local storage whenever URLs state changes
+    useEffect(() => {
+      localStorage.setItem('shortenedUrls', JSON.stringify(urls));
+    }, [urls]);
+  
+  const handleShortenUrl = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/short', { originalUrl });
+      const newShortUrl = response.data.shortUrl;
+      setShortUrl(newShortUrl);
+      setError('');
+      setIsUrlShortened(true);
+      setUrls((prevUrls) => [...prevUrls, `http://localhost:5000/short/${newShortUrl}`]);
+      setUrl('');  // Clear the input field on successful URL generation
+    } catch (error) {
+      setError('Error creating short URL');
+      setShortUrl('');
+      setIsUrlShortened(false);
     }
   };
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
+  };
+
+  const clearInput = () => {
+    setUrl('');
   };
 
   return (
@@ -27,18 +64,29 @@ function Home() {
                 e.preventDefault();
                 handleShortenUrl();
               }}
+              className="relative"
             >
               <input
                 type="text"
                 placeholder="Enter URL"
                 className="homeInput"
-                value={url}
+                value={originalUrl}
                 onChange={(e) => setUrl(e.target.value)}
               />
-              <button type="button" className="shortButton" onClick={handleShortenUrl}>
+              {originalUrl && (
+                <button
+                  type="button"
+                  className="clearButton"
+                  onClick={clearInput}
+                >
+                  &times;
+                </button>
+              )}
+              <button type="submit" className="shortButton">
                 Short URL
               </button>
             </form>
+            {error && <div className="error">{error}</div>}
           </div>
           <table className="w-full mt-4">
             <tbody>

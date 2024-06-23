@@ -23,7 +23,7 @@ passport.use(new GoogleStrategy({
 },
 (accessToken,refreshToken,profile,done)=>{
     //check if already exists 
-
+        console.log('profile',profile)
         User.findOne({GoogleId:profile.id}).then((currentUser)=>{
             if(currentUser)
                 {       
@@ -47,7 +47,6 @@ passport.use(new GoogleStrategy({
 
 }
 ));
-
 
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
