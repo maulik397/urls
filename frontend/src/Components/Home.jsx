@@ -4,7 +4,7 @@ import axios from 'axios';
 
 function Home() {
 
-    // Load URLs from local storage when component mounts
+    // Load URLs from local storage when component mounts initially 
     useEffect(() => {
       const storedUrls = localStorage.getItem('shortenedUrls');
       if (storedUrls) {
@@ -88,23 +88,25 @@ function Home() {
             </form>
             {error && <div className="error">{error}</div>}
           </div>
-          <table className="w-full mt-4">
-            <tbody>
-              {urls.map((shortenedUrl, index) => (
-                <tr key={index} className="border-b">
-                  <td className="p-2 text-white">{shortenedUrl}</td>
-                  <td className="p-2">
-                    <button
-                      className="copyButton"
-                      onClick={() => handleCopy(shortenedUrl)}
-                    >
-                      Copy
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="url-list max-h-60 mt-8 overflow-y-auto custom-scrollbar">
+                        <table className="w-full mt-4 text-left text-white">
+                            <tbody>
+                                {urls.map((shortenedUrl, index) => (
+                                    <tr key={index} className="border-b border-gray-700">
+                                        <td className="p-2 break-all">{shortenedUrl}</td>
+                                        <td className="p-2">
+                                            <button
+                                                className="copyButton bg-blue-500 text-white px-2 py-1 rounded-lg"
+                                                onClick={() => handleCopy(shortenedUrl)}
+                                            >
+                                                Copy
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
         </div>
       </div>
     </div>

@@ -40,7 +40,7 @@ passport.use(new GoogleStrategy({
                     profileImage: profile.photos[0].value,
                 }).save().then((newUser)=>{
                     console.log('new user is',newUser)
-                    done(null,currentUser);
+                    done(null,newUser);
                 })
             }
         })
@@ -72,7 +72,7 @@ passport.use(new GitHubStrategy({
                 profileImage: profile.photos[0].value,
             }).save().then((newUser)=>{
                 
-                done(null,currentUser);
+                done(null,newUser);
             })
         }
        
