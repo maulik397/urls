@@ -20,7 +20,7 @@ router.get("/login/failed", (req, res) => {
         req.session = null; 
         res.clearCookie('connect.sid', { path: '/' }); 
 
-        res.redirect('http://localhost:5173/login'); 
+        res.redirect('http://localhost:5173/'); 
     });
   })
 router.get('/login/success', async (req, res) => {

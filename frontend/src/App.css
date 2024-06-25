@@ -35,6 +35,9 @@
 
   background-color: #2F2F33;
 }
+.inputContainer {
+  position: relative;
+}
 
 .homeInput {
   border-radius: 3px;
@@ -46,6 +49,7 @@
   color: rgb(22, 22, 22);
   margin-top: 2rem;
 }
+
 
 .homebox {
   width: 100%;

@@ -20,7 +20,7 @@ function App() {
         });
        console.log("response from PP",response);
         if (response.status === 200 && response.data.success) {
-           
+          
           setUser(response.data.user);
         } else {
           throw new Error(response.data.message || 'Authentication has failed!');
@@ -42,7 +42,7 @@ function App() {
       <Navbar user={user}/>
 
       <Routes>
-        <Route path='/' element={<Home/>}></Route>
+        <Route path='/' element={<Home user={user}/>}></Route>
 
         <Route path='/login' element={user ? <Navigate to ='/' />:<Login/>}></Route>
         <Route path="/user" element={<User/>}></Route>

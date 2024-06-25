@@ -34,8 +34,10 @@ app.use("/auth",authRoute)
 app.post("/short",async(req,res)=>{
     try
     {
-        const originalUrl = req.body.originalUrl;
-  
+        const { originalUrl, userId } = req.body;   
+
+        console.log('Received originalUrl:', originalUrl);
+        console.log('Received userId:', userId);
         const url = await Url.find({originalUrl})
          //check if url already exsist or not
         if(url.length>0)
@@ -44,9 +46,14 @@ app.post("/short",async(req,res)=>{
             }
             else
             {
-                const newUrl = await Url.create({originalUrl})
-                console.log("new url" ,newUrl)
-                res.status(201).send(newUrl);
+                const newUrlData = { originalUrl };
+             if (userId) {
+              newUrlData.userId = userId; 
+                 }
+                 const newUrl = await Url.create(newUrlData);
+               
+              
+                res.status(201).send({ shortUrl: newUrl.shortUrl });
             }
     }   
     catch(error )
@@ -112,7 +119,29 @@ app.delete("/short/:id",async(req,res)=>{
     }
 })
 
+//get urls from userid
+app.get("/user",async(req,res)=>{
+    try
+    {
+       const id = req.query.userId;
+       const fetchurl = await Url.find({userId:id});
+       console.log("user urls are :",fetchurl);
 
+       if (fetchurl.length === 0)
+         {
+        return res.status(404).send({ message: "URLs not found for this user" });
+        }
+
+  
+            res.status(200).send(fetchurl);
+        
+    }
+    catch(error)
+    {
+        res.status(500).send({ message: "Something went wrong" });
+        console.log("Error: ", error.message);
+    }
+})
 
 app.listen(5000,()=>{
     console.log("server is running ")

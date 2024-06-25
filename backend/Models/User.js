@@ -7,8 +7,11 @@ const userschema = new Schema ({
     username:String,
 
     GoogleId :String,
+    
     GithubId:String,
+
     loginMethod: String,
+
     profileImage: String,
 
 },{timestamps:true});
