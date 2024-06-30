@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/auth/login/success', {
+        const response = await axios.get('https://us.maulikdalwadi.tech/auth/login/success', {
           withCredentials: true,
         });
        console.log("response from PP",response);
