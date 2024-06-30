@@ -5,6 +5,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+
 function Home({ user }) {
   const [originalUrl, setUrl] = useState('');
   const [urls, setUrls] = useState(() => {
@@ -24,17 +25,28 @@ function Home({ user }) {
           const fetchedUrls = response.data.map(url => `https://us.maulikdalwadi.tech/short/${url.shortUrl}`);
           setUrls((prevUrls) => [...prevUrls, ...fetchedUrls]);
           setError('');
+          setIsUrlShortened(true);
         } catch (error) {
           setError('Error fetching short URLs');
         }
       };
       fetchUrls();
     }
+    else {
+      setUrls([]);
+    }
   }, [user]);
 
   useEffect(() => {
     localStorage.setItem('shortenedUrls', JSON.stringify(urls));
   }, [urls]);
+
+  useEffect(() => {
+    const storedUrls = localStorage.getItem('shortenedUrls');
+    if (storedUrls) {
+      setUrls(JSON.parse(storedUrls));
+    }
+  }, []);
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
@@ -70,6 +82,8 @@ function Home({ user }) {
     } catch (error) {
       setError('Error creating short URL');
       setShortUrl('');
+      setIsUrlShortened(false);
+
     }
   };
 
@@ -82,7 +96,7 @@ function Home({ user }) {
       setError('Error deleting short URL');
     }
   };
-
+  
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
