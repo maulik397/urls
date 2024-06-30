@@ -1,7 +1,7 @@
 const express = require('express')
 const router= require('express').Router();
 const passport = require('passport')
-const CLIENT_URL = "https://urlshortener.maulikdalwadi.tech/";
+const CLIENT_URL = "https://urlshortener.maulikdalwadi.tech";
 const User = require('../Models/User')
 
 router.get("/login/failed", (req, res) => {
