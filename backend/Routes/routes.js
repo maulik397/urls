@@ -1,7 +1,7 @@
 const express = require('express')
 const router= require('express').Router();
 const passport = require('passport')
-const CLIENT_URL = "http://localhost:5173/";
+const CLIENT_URL = "https://urlshortener.maulikdalwadi.tech/";
 const User = require('../Models/User')
 
 router.get("/login/failed", (req, res) => {
@@ -20,7 +20,7 @@ router.get("/login/failed", (req, res) => {
         req.session = null; 
         res.clearCookie('connect.sid', { path: '/' }); 
 
-        res.redirect('http://localhost:5173/'); 
+        res.redirect('https://urlshortener.maulikdalwadi.tech/'); 
     });
   })
 router.get('/login/success', async (req, res) => {

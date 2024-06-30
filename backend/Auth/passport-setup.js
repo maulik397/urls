@@ -19,7 +19,7 @@ const FACEBOOK_CLIENT_SECRET = process.env.FACEBOOK_CLIENT_SECRET;
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:5000/auth/google/callback"
+    callbackURL: "https://us.maulikdalwadi.tech/auth/google/callback"
 },
 (accessToken,refreshToken,profile,done)=>{
     //check if already exists 
@@ -51,7 +51,7 @@ passport.use(new GoogleStrategy({
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:5000/auth/github/callback"
+    callbackURL: "https://us.maulikdalwadi.tech/auth/github/callback"
   },(accessToken,refreshToken,profile,done)=>{
 
     //check if user already exists 
