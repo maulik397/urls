@@ -16,40 +16,50 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight:lighter;
-  font-size:xx-large;
+  font-weight: lighter;
+  font-size: xx-large;
   padding-top: 3rem;
   padding-bottom: 0.5rem;
   color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 6vw; /* Responsive font size */
 }
 
 .home-container {
-  border-color: aqua;
-  height: 450px;
-  width: 800px;
+  border: 2px solid aqua;
+  height: 80vh;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  min-height:60vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-
-
   background-color: #2F2F33;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .inputContainer {
   position: relative;
+  width: auto;
 }
 
 .homeInput {
   border-radius: 3px;
   border-width: 1px;
   padding: 0.3rem;
-  width: 300px;
+  width: 100%; /* Changed to be responsive */
+  max-width: 300px;
   border-color: rgb(0, 0, 0);
   background-color: rgb(255, 255, 255);
   color: rgb(22, 22, 22);
   margin-top: 2rem;
+  font-size: 4vw; /* Responsive font size */
 }
-
 
 .homebox {
   width: 100%;
@@ -76,6 +86,12 @@
   color: white;
   cursor: pointer;
 }
+.url-list {
+  margin-top: 8px;
+  max-height: 240px; /* Adjust height as needed */
+}
+
+
 
 .home-wrapper {
   display: flex;
@@ -83,7 +99,6 @@
   align-items: center;
   flex-direction: column;
 }
-
 .table {
   width: 100%;
   margin-top: 1rem;
@@ -119,54 +134,19 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background-color: rgba(255, 255, 255, 0.2);
 }
-.Navbar
-{
-  height:70px;
-  color: white;
-  background-color: #242428;
-  width:100%;
-  display:flex;
-  align-items:center ;
-  justify-content: space-between;
-}
-.list{
-  display: flex;
-  text-decoration: none;
-  margin-right: 50px;
-  align-items: center;
-  font-family: "Electrolize", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-.listItem{
-  margin-right: 50px;
-  font-weight: 500;
-  cursor:pointer;
+
+@media (min-width: 768px) {
+  .homeTitle {
+    font-size: xx-large; /* Revert to original size */
+  }
+
+  .homeInput, .shortButton {
+    font-size: initial;
+    /* Revert to original size */
+  }
   
 }
-.avatar{
-  width:32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-.logo{
-  font-family: "Electrolize", sans-serif;
-  font-weight: 400;
-  font-weight: bold;
-  font-size: 20px;
-  margin-left: 20px;
-  font-style: normal;
-}
-.shortButton
-{
-  border-radius: 3px;
-
-  padding: 0.3rem;
-  margin-left: 7px;
-  background-color: #2b6cb0;
-}
-
+/*footers*/ 
 .Footer
 {
   background-color: rgb(33, 33, 33);
@@ -292,6 +272,77 @@ font-size: 20px;
 
 @media (min-width: 640px) { 
 
+.homeInput {
+  border-radius: 3px;
+  border-width: 1px;
+  padding: 0.3rem;
+  width: 300px;
+  border-color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  color: rgb(22, 22, 22);
+  margin-top: 2rem;
+}
 
-  
+}
+.Navbar {
+  height: 70px;
+  color: white;
+  background-color: #242428;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-toggle {
+  cursor: pointer;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  margin-right: 0;
+  font-family: "Electrolize", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.listItem {
+  margin-right: 0;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.user {
+  margin-right: 50px;
+  font-weight: 500;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logo {
+  font-family: "Electrolize", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 20px;
+  font-style: normal;
+}
+
+@media (min-width: 768px) {
+  .list {
+    flex-direction: row;
+    margin-right: 50px;
+  }
+
+  .listItem {
+    margin-right: 50px;
+  }
 }
