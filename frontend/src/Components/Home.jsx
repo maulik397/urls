@@ -5,7 +5,6 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 function Home({ user }) {
   const [originalUrl, setUrl] = useState('');
   const [urls, setUrls] = useState(() => {
@@ -15,16 +14,15 @@ function Home({ user }) {
   const [shortUrl, setShortUrl] = useState('');
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
+  const [isUrlShortened, setIsUrlShortened] = useState(false);
 
-  // Load URLs from backend when user is logged in
   useEffect(() => {
     if (user && user._id) {
       const fetchUrls = async () => {
         try {
           const response = await axios.get(`https://us.maulikdalwadi.tech/user?userId=${user._id}`);
-          const fetchedUrls = response.data;
-          const formattedUrls = fetchedUrls.map(url => `https://us.maulikdalwadi.tech/short/${url.shortUrl}`);
-          setUrls((prevUrls) => [...prevUrls, ...formattedUrls]);
+          const fetchedUrls = response.data.map(url => `https://us.maulikdalwadi.tech/short/${url.shortUrl}`);
+          setUrls((prevUrls) => [...prevUrls, ...fetchedUrls]);
           setError('');
         } catch (error) {
           setError('Error fetching short URLs');
@@ -34,19 +32,18 @@ function Home({ user }) {
     }
   }, [user]);
 
-  // Update local storage whenever URLs state changes
   useEffect(() => {
     localStorage.setItem('shortenedUrls', JSON.stringify(urls));
   }, [urls]);
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
-    setOpen(true); // Show the snackbar
+    setOpen(true);
   };
 
   const isValidUrl = (url) => {
     try {
-      new URL(url); // Attempt to create a URL object
+      new URL(url);
       return true;
     } catch (error) {
       return false;
@@ -61,35 +58,26 @@ function Home({ user }) {
     }
 
     try {
-      let postData = { originalUrl };
-
-      if (user && user._id) {
-        postData.userId = user._id;
-      }
+      const postData = { originalUrl, userId: user?._id };
 
       const response = await axios.post('https://us.maulikdalwadi.tech/short', postData);
       const newShortUrl = response.data.shortUrl;
       setShortUrl(newShortUrl);
       setError('');
       setIsUrlShortened(true);
-      setUrls((prevUrls) => [...prevUrls, `https://us.maulikdalwadi.tech/short/short/${newShortUrl}`]);
-      setUrl('');  // Clear the input field on successful URL generation
+      setUrls((prevUrls) => [...prevUrls, `https://us.maulikdalwadi.tech/short/${newShortUrl}`]);
+      setUrl('');
     } catch (error) {
       setError('Error creating short URL');
       setShortUrl('');
     }
   };
 
-  const handleDelete = async(shortenedUrl) => {
-   
-    try
-    {
-     
-      let id =  shortenedUrl.substring(shortenedUrl.lastIndexOf('/')+1);
-   
-      const response = await axios.delete(`https://us.maulikdalwadi.tech/short/${id}`);
-
-      setUrls(prevUrls => prevUrls.filter(url => url !== shortenedUrl));
+  const handleDelete = async (shortenedUrl) => {
+    try {
+      const id = shortenedUrl.substring(shortenedUrl.lastIndexOf('/') + 1);
+      await axios.delete(`https://us.maulikdalwadi.tech/short/${id}`);
+      setUrls((prevUrls) => prevUrls.filter(url => url !== shortenedUrl));
     } catch (error) {
       setError('Error deleting short URL');
     }
@@ -183,6 +171,7 @@ function Home({ user }) {
 }
 
 export default Home;
+
 
 
 /*

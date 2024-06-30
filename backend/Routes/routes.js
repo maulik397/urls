@@ -11,7 +11,7 @@ router.get("/login/failed", (req, res) => {
     });
   });
 
-  router.get('/logout',(req,res)=>{
+  router.get('/logout',(req,res)=>{-
     req.logout(err => { 
         if (err) {
             console.error('Error logging out:', err);
@@ -20,7 +20,7 @@ router.get("/login/failed", (req, res) => {
         req.session = null; 
         res.clearCookie('connect.sid', { path: '/' }); 
 
-        res.redirect('https://urlshortener.maulikdalwadi.tech/'); 
+        res.redirect('https://urlshortener.maulikdalwadi.tech'); 
     });
   })
 router.get('/login/success', async (req, res) => {
