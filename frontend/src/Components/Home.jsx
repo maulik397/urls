@@ -34,9 +34,9 @@ function Home({ user }) {
     if (user && user._id) {
       const fetchUrls = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/user?userId=${user._id}`);
+          const response = await axios.get(`https://us.maulikdalwadi.tech/user?userId=${user._id}`);
           const fetchedUrls = response.data;
-          const formattedUrls = fetchedUrls.map(url => `http://localhost:5000/short/${url.shortUrl}`);
+          const formattedUrls = fetchedUrls.map(url => `https://us.maulikdalwadi.tech/short/${url.shortUrl}`);
           setUrls((prevUrls) => [...prevUrls, ...formattedUrls]);
           setError('');
           setIsUrlShortened(true);
@@ -63,12 +63,12 @@ function Home({ user }) {
         postData.userId = user._id;
       }
 
-      const response = await axios.post('http://localhost:5000/short', postData);
+      const response = await axios.post('https://us.maulikdalwadi.tech/short', postData);
       const newShortUrl = response.data.shortUrl;
       setShortUrl(newShortUrl);
       setError('');
       setIsUrlShortened(true);
-      setUrls((prevUrls) => [...prevUrls, `http://localhost:5000/short/${newShortUrl}`]);
+      setUrls((prevUrls) => [...prevUrls, `https://us.maulikdalwadi.tech/short/${newShortUrl}`]);
       setUrl('');  // Clear the input field on successful URL generation
     } catch (error) {
       setError('Error creating short URL');
@@ -89,7 +89,7 @@ function Home({ user }) {
      
       let id =  shortenedUrl.substring(shortenedUrl.lastIndexOf('/')+1);
    
-      const response = await axios.delete(`http://localhost:5000/short/${id}`);
+      const response = await axios.delete(`https://us.maulikdalwadi.tech/short/${id}`);
 
       setUrls(prevUrls => prevUrls.filter(url => url !== shortenedUrl));
       
