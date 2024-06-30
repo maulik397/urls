@@ -23,7 +23,7 @@ app.use(passport.session());
 
 app.use(express.json());
 app.use(cors({
-    origin: "https://urlshortener.maulikdalwadi.tech/",
+    origin: "https://urlshortener.maulikdalwadi.tech",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }));
