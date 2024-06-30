@@ -11,7 +11,7 @@ router.get("/login/failed", (req, res) => {
     });
   });
 
-  router.get('/logout',(req,res)=>{-
+  router.get('/logout',(req,res)=>{
     req.logout(err => { 
         if (err) {
             console.error('Error logging out:', err);
