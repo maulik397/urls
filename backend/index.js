@@ -50,7 +50,7 @@ app.post("/short",async(req,res)=>{
              if (userId) {
               newUrlData.userId = userId; 
                  }
-                 //default
+                 //defau
                  const newUrl = await Url.create(newUrlData);
                
               

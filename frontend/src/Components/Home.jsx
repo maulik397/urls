@@ -83,6 +83,8 @@ function Home({ user }) {
       setError('Error creating short URL');
       setShortUrl('');
       setIsUrlShortened(false);
+      setUrl('');
+      
 
     }
   };
