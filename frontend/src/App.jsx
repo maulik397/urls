@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 import Footer from './Components/Footer'
@@ -16,7 +14,7 @@ function App() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/auth/login/success', {
+        const response = await axios.get('https://us.maulikdalwadi.tech/auth/login/success', {
           withCredentials: true,
         });
        console.log("response from PP",response);

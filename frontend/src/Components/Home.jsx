@@ -22,8 +22,9 @@ function Home({ user }) {
       const fetchUrls = async () => {
         try {
           const response = await axios.get(`http://localhost:5000/user?userId=${user._id}`);
-          const fetchedUrls = response.data.map(url => `http://localhost:5000/short/${url.shortUrl}`);
-          setUrls(prevUrls => [...prevUrls, ...fetchedUrls]);
+          const fetchedUrls = response.data;
+          const formattedUrls = fetchedUrls.map(url => `http://localhost:5000/short/${url.shortUrl}`);
+          setUrls((prevUrls) => [...prevUrls, ...formattedUrls]);
           setError('');
         } catch (error) {
           setError('Error fetching short URLs');
@@ -67,21 +68,26 @@ function Home({ user }) {
       }
 
       const response = await axios.post('http://localhost:5000/short', postData);
-      const newShortUrl = `http://localhost:5000/short/${response.data.shortUrl}`;
+      const newShortUrl = response.data.shortUrl;
       setShortUrl(newShortUrl);
       setError('');
-      setUrls(prevUrls => [...prevUrls, newShortUrl]);
-      setUrl(''); // Clear the input field on successful URL generation
+      setIsUrlShortened(true);
+      setUrls((prevUrls) => [...prevUrls, `http://localhost:5000/short/${newShortUrl}`]);
+      setUrl('');  // Clear the input field on successful URL generation
     } catch (error) {
       setError('Error creating short URL');
       setShortUrl('');
     }
   };
 
-  const handleDelete = async (shortenedUrl) => {
-    try {
-      const id = shortenedUrl.substring(shortenedUrl.lastIndexOf('/') + 1);
-      await axios.delete(`http://localhost:5000/short/${id}`);
+  const handleDelete = async(shortenedUrl) => {
+   
+    try
+    {
+     
+      let id =  shortenedUrl.substring(shortenedUrl.lastIndexOf('/')+1);
+   
+      const response = await axios.delete(`http://localhost:5000/short/${id}`);
 
       setUrls(prevUrls => prevUrls.filter(url => url !== shortenedUrl));
     } catch (error) {

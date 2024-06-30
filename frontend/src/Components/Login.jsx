@@ -7,11 +7,11 @@ import facebookIcon from '../assets/facebook.png';
 function Login() {
   function google()
   {
-    window.open('http://localhost:5000/auth/google',"_self")
+    window.open('https://us.maulikdalwadi.tech/auth/google',"_self")
   }
   function github()
   {
-    window.open('http://localhost:5000/auth/github',"_self")
+    window.open('https://us.maulikdalwadi.tech/auth/github',"_self")
   }
   return (
     <div className="Login flex justify-center items-center h-screen bg-red-900">
