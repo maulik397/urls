@@ -2,7 +2,7 @@ import React from 'react';
 import '../App.css';
 function Footer() {
   const githuburl = new URL('../assets/github.png', import.meta.url);
-  const linkedinurl = new URL('../assets/Linkedins.png', import.meta.url);
+  const linkedinurl = new URL('../assets/LinkedIns.png', import.meta.url);
   const instagram = new URL('../assets/INSTA.png', import.meta.url);
 
   return (
