@@ -5,6 +5,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { QRCodeCanvas } from 'qrcode.react'; // Import QRCodeCanvas from qrcode.react
+import CloseIcon from '@mui/icons-material/Close';
 
 function Home({ user }) {
   const [originalUrl, setUrl] = useState('');
@@ -16,6 +18,7 @@ function Home({ user }) {
   const [error, setError] = useState('');
   const [open, setOpen] = useState(false);
   const [isUrlShortened, setIsUrlShortened] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
 
   useEffect(() => {
     if (user && user._id) {
@@ -31,8 +34,7 @@ function Home({ user }) {
         }
       };
       fetchUrls();
-    }
-    else {
+    } else {
       setUrls([]);
     }
   }, [user]);
@@ -84,8 +86,6 @@ function Home({ user }) {
       setShortUrl('');
       setIsUrlShortened(false);
       setUrl('');
-      
-
     }
   };
 
@@ -110,9 +110,17 @@ function Home({ user }) {
     setUrl('');
   };
 
+  const generateQRCode = (url) => {
+    setQrCodeUrl(url);
+  };
+
+  const removeQRCode = () => {
+    setQrCodeUrl('');
+  };
+
   return (
     <div className="Home">
-      <div className="home-container">
+      <div className={`home-container ${qrCodeUrl ? 'filter blur-sm' : ''}`}>
         <div className="homebox">
           <div className="homeTitle text-2xl font-bold">URL-SHORTENER</div>
           <div className="home-wrapper mt-4">
@@ -156,6 +164,14 @@ function Home({ user }) {
                       >
                         Copy
                       </Button>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        onClick={() => generateQRCode(shortenedUrl)}
+                      >
+                        QR Code
+                      </Button>
                       <IconButton
                         aria-label="delete"
                         color="primary"
@@ -182,12 +198,28 @@ function Home({ user }) {
           </div>
         </div>
       </div>
+      {qrCodeUrl && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="relative bg-white p-4 rounded-lg shadow-lg">
+            <IconButton
+              aria-label="close"
+              color="secondary"
+              size="small"
+              className="absolute top-2 right-2"
+              onClick={removeQRCode}
+            >
+              <CloseIcon />
+            </IconButton>
+            <QRCodeCanvas value={qrCodeUrl} size={256} />
+          </div>
+        </div>
+      )}
     </div>
   );
+  
 }
 
 export default Home;
-
 
 
 /*
