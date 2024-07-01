@@ -146,8 +146,7 @@ tr:nth-child(even) {
   }
   
 }
-/*footers*/ 
-.Footer {
+/*footers*/ .Footer {
   background-color: rgb(33, 33, 33);
   color: white;
   height: 10vh;
@@ -160,7 +159,7 @@ tr:nth-child(even) {
   display: flex;
   text-decoration: none;
   align-items: center;
-  justify-content: center;
+  justify-content:space-around;
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -173,9 +172,12 @@ tr:nth-child(even) {
 }
 
 .footer-icon {
-  width: 24px;
-  height: 24px;
+  width: 30px;  
+  height: 30px; /* Adjust the size as needed */
+  border-radius: 50%; /* This makes the images rounded */
+  object-fit: cover; /* Ensures the image covers the entire area */
 }
+
 .Login{
   width: 100%;
   height:90vh;

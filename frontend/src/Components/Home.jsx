@@ -19,7 +19,7 @@ function Home({ user }) {
   const [open, setOpen] = useState(false);
   const [isUrlShortened, setIsUrlShortened] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
-
+  const [isGenerating, setIsGenerating] = useState(false);
   useEffect(() => {
     if (user && user._id) {
       const fetchUrls = async () => {
@@ -68,9 +68,10 @@ function Home({ user }) {
     e.preventDefault();
     if (!isValidUrl(originalUrl)) {
       setError('Please enter a valid URL');
+      setTimeout(() => setError(''), 1100);
       return;
     }
-
+    setIsGenerating(true);
     try {
       const postData = { originalUrl, userId: user?._id };
 
@@ -86,7 +87,9 @@ function Home({ user }) {
       setShortUrl('');
       setIsUrlShortened(false);
       setUrl('');
+      setTimeout(() => setError(''), 1100); 
     }
+     setIsGenerating(false);
   };
 
   const handleDelete = async (shortenedUrl) => {
@@ -155,7 +158,7 @@ function Home({ user }) {
                 {urls.map((shortenedUrl, index) => (
                   <tr key={index} className="border-b border-gray-700">
                     <td className="p-2 break-all">{shortenedUrl}</td>
-                    <td className="p-2">
+                    <td className="p-2 ">
                       <Button
                         variant="contained"
                         color="primary"
@@ -164,14 +167,17 @@ function Home({ user }) {
                       >
                         Copy
                       </Button>
+                      <span className='m-2 mb-2'></span>
                       <Button
                         variant="contained"
                         color="secondary"
                         size="small"
                         onClick={() => generateQRCode(shortenedUrl)}
+                        className="action-button"
                       >
-                        QR Code
+                        QR 
                       </Button>
+                      <span className='m-2 mb-2'></span>
                       <IconButton
                         aria-label="delete"
                         color="primary"
@@ -199,21 +205,22 @@ function Home({ user }) {
         </div>
       </div>
       {qrCodeUrl && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="relative bg-white p-4 rounded-lg shadow-lg">
-            <IconButton
-              aria-label="close"
-              color="secondary"
-              size="small"
-              className="absolute top-2 right-2"
-              onClick={removeQRCode}
-            >
-              <CloseIcon />
-            </IconButton>
-            <QRCodeCanvas value={qrCodeUrl} size={256} />
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="relative bg-white p-4 rounded-lg shadow-lg">
+      <IconButton
+        aria-label="close"
+        color="primary"
+        size="small"
+        className="absolute top-2 right-2"
+        onClick={removeQRCode}
+      >
+        <CloseIcon />
+      </IconButton>
+    
+      <QRCodeCanvas value={qrCodeUrl} size={256} />
+    </div>
+  </div>
+)}
     </div>
   );
   
